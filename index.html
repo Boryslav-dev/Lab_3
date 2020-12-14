@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>3.2.4 Примеры</title>
+  <meta charset="utf-8">
+
+  <script>
+    function showworktime(obj) 
+    {
+      var dateNow = new Date();
+      var dateWorkBegin = new Date(document.getElementById("data").value);
+      var name = document.getElementById("name").value;
+      var staz = (dateNow.getFullYear()-dateWorkBegin.getFullYear());
+      // Проверка даты
+      if(dateNow.getMonth()<dateWorkBegin.getMonth()||dateNow.getDate()<dateWorkBegin.getDate()){
+          staz = staz - 1;
+      }
+      else if(dateNow.getMonth()>dateWorkBegin.getMonth()||dateNow.getDate()>dateWorkBegin.getDate())
+      {
+          console.log(staz);
+      }
+      // Добавляем 1 к месяцу для корректного отображения
+      var stazMonth = dateWorkBegin.getMonth() + 1;
+      // Находим нужную таблицу
+      var tbody = document.getElementById('stazh').getElementsByTagName('tbody')[0];    
+      // Создаем строку таблицы и добавляем ее
+      var row = tbody.insertRow(0);
+      var td1 = row.insertCell(0);  
+      var td2 = row.insertCell(1);     
+      // Наполняем ячейки
+      td1.innerHTML = name; 
+      td2.innerHTML = staz;
+      table.set(name, staz);
+    }
+  function showAVG(obj){
+      // получение данных с таблицы стаж
+      var table = document.getElementById('stazh');
+      // запись последней строки таблицы 
+      var last_collum = table.querySelectorAll("td:last-child");
+      var mass = [];
+      // запись данных в массив
+      for(var i = 0; i < last_collum.length; i++){
+          mass.push(parseInt(last_collum[i].innerHTML));
+      } 
+      // суммирование всех елементов массива
+      var sum = 0;
+      for(var j = 0; j < mass.length; j++){
+        sum+=mass[j];
+      }
+      // подсчёт среднего стажа
+      AvgStaz = sum/mass.length;
+     alert(AvgStaz);
+      // Находим нужную таблицу
+     var tbody = document.getElementById('table').getElementsByTagName('tbody')[0];    
+      // Создаем строку таблицы и добавляем ее
+      var row = tbody.insertRow(0);
+      var td1 = row.insertCell(0);      
+      // Наполняем ячейки
+      td1.innerHTML = AvgStaz; 
+      table.set(AvgStaz);
+    }
+   </script>
+</head>
+
+<body>
+  <div>Пример добавления содержимого в элемент.</div>
+  <form>
+    <input type="text" id="addedtxt" value="какой-то текст..."> 
+    <br>
+    <input type="button" onclick="addText();" value="Добавить текст">
+    <div id="foraddedtxt">В конце данной строки будет добавлен введенный текст-></div>
+  </form>
+
+  <div>Вычисление стажа работы, если в анкете приводятся данные: фамилия и дата приема на работу.</div>
+  <form name="form3_9">
+    <table border="1">
+      <tr><td>Фамилия:</td><td><input type="text" value="" id="name" name="FIO"></td></tr>
+      <tr><td>Дата приема на работу:</td><td><input type="text" id="data" name="firstDate" value=""></td></tr>
+    </table>
+    <input type="button" value="WorkTime" onclick="showworktime(form3_9)">
+    <table border="1" id="stazh">
+      <thead>
+        <tr>
+          <th>Имя</th>
+          <th>Стаж</th>
+        </tr>
+      </thead>
+      <input type="button" value="Average Staz" onclick="showAVG(form3_9)">
+      <tbody>
+        <table border="1" id="table">
+            <thead>
+              <tr>
+                <th>Средний стаж работников</th>
+              </tr>
+            </thead>
+            <tbody>
+      </tbody>
+    </table>
+  </form>
+  <br>
+  
+  
+  <a href="index.html">Вернуться на главную страницу</a>
+</body>
+</html>
